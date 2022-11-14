@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Dropper 🎈</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .gradientBG{
+            background: linear-gradient(-45deg, #23d5ab, #23a6d5, #e73c7e, #ee7752);
+            background-size: 400% 400%!important;
+            animation: gradientBG 15s ease infinite;
+        } 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%;}
+            50% { background-position: 100% 50%;}
+            100% { background-position: 0% 50%;}
+        }
+        
+        @-moz-keyframes gradientBG {
+            0% { background-position: 0% 50%;}
+            50% { background-position: 100% 50%;}
+            100% { background-position: 0% 50%;}
+        }
+        
+        .gradientBG_dark{
+            background: linear-gradient(-45deg, #005642, #00465f, #6f002a, #611700);
+            background-size: 400% 400%;
+            animation: gradientBG_dark 15s ease infinite;
+        }
+        
+        @keyframes gradientBG_dark {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradientBG_light{
+            background: linear-gradient(-45deg, #d8fff6, #d6f4ff, #ffdcea, #ffe4dc);
+            background-size: 400% 400%;
+            animation: gradientBG_light 15s ease infinite;
+        }
+        
+        @keyframes gradientBG_light {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+    </style>
+</head>
+  <body class="gradientBG" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <center>
+    <div class="card rounded shadow-lg" style="width: 40rem">
+      <div class="card-body">
+        <h4 class="card-title">🎈</h4>
+        <form action="/drop/upload" id='fm' class="dropzone card">
+        </form>
+      </div>
+    </div>
+    <div class="card rounded shadow-lg" style="width: 40rem; margin-top: 10px;">
+      <div class="card-body">
+        <form method="post" onsubmit="sub()">
+            <div class="form-group">
+                <textarea name="fl" id="fl" value="" hidden></textarea>
+                <textarea class="form-control" placeholder="Type something here.. "name="msg" id="ts1" rows="2"></textarea>
+            </div>    
+            <button type="submit" class="btn btn-primary">Drop</button>
+        </form>
+      </div>
+    </div>
+    <div>~clp~</div> 
+    </center>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+    <script>
+        var fls = []
+        Dropzone.options.fm={
+            success: function(file, response){
+                fls.push(response)
+            }
+        }
+        var sub = function() {
+            document.getElementById("fl").innerText = JSON.stringify(fls)
+        }
+    </script>
+  </body>
+</html>

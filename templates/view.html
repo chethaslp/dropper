@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Dropper 🎈</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .gradientBG{
+            background: linear-gradient(-45deg, #23d5ab, #23a6d5, #e73c7e, #ee7752);
+            background-size: 400% 400%!important;
+            animation: gradientBG 15s ease infinite;
+        } 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%;}
+            50% { background-position: 100% 50%;}
+            100% { background-position: 0% 50%;}
+        }
+        
+        @-moz-keyframes gradientBG {
+            0% { background-position: 0% 50%;}
+            50% { background-position: 100% 50%;}
+            100% { background-position: 0% 50%;}
+        }
+        
+        .gradientBG_dark{
+            background: linear-gradient(-45deg, #005642, #00465f, #6f002a, #611700);
+            background-size: 400% 400%;
+            animation: gradientBG_dark 15s ease infinite;
+        }
+        
+        @keyframes gradientBG_dark {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradientBG_light{
+            background: linear-gradient(-45deg, #d8fff6, #d6f4ff, #ffdcea, #ffe4dc);
+            background-size: 400% 400%;
+            animation: gradientBG_light 15s ease infinite;
+        }
+        
+        @keyframes gradientBG_light {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+    </style>
+</head>
+  <body class="gradientBG" style=" top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <center>
+    {% if not login %} 
+    <div class="card rounded shadow-lg" style="width: auto; margin-top: 10px;">
+      <div class="card-body">
+        <form method="post">
+                <input type="password" class="form-control" placeholder="Enter passcode" name="pw" id="ts1"></input>
+        </form>
+      </div>
+    </div>
+    {% else %}
+    {{d}}
+    <div class="card rounded shadow-lg" style="margin-top: 10px;">
+        <div class="card-body">
+            <ul class="list-group">
+            {% for k,v in d.items() %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="card" style="width:18rem;">
+                    <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted ">{{v['d']}}</h6>
+                    <p class="card-text">{{v['ip']}}</p>
+                  </div>
+                </div>
+                {% set att = (v['f'] | json) %}
+                {% if (att | length) != 0 %}
+                <ul class="list-group">
+                {% for attt in att %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{attt}}
+                    </li>
+                {% endfor %}
+                </ul>
+                {%endif%}
+
+                <span style="padding: 5px;" class="badge bg-primary rounded-pill text-white">{{k | dt}}</span>
+              </li>
+            {%endfor%}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <div>~clp~</div> 
+    </center>
+  </body>
+</html>
