@@ -47,16 +47,16 @@
 
     </style>
 </head>
-  <body class="gradientBG" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+  <body class="gradientBG_dark" style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
     <center>
-    <div class="card rounded shadow-lg" style="width: 40rem">
+    <div class="card shadow" style="width: 40rem; border-radius: 1rem!important;">
       <div class="card-body">
         <h4 class="card-title">🎈</h4>
-        <form action="/drop/upload" id='fm' class="dropzone card">
+        <form action="/drop/upload" id='fm' class="dropzone">
         </form>
       </div>
     </div>
-    <div class="card rounded shadow-lg" style="width: 40rem; margin-top: 10px;">
+    <div class="card shadow" style="width: 40rem; margin-top: 10px;border-radius: 1rem!important;">
       <div class="card-body">
         <form method="post" onsubmit="sub()">
             <div class="form-group">
@@ -67,7 +67,7 @@
         </form>
       </div>
     </div>
-    <div>~clp~</div> 
+    <div class="text-white">~clp~</div> 
     </center>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
     <script>

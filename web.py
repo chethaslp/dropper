@@ -41,6 +41,10 @@ def vvsd():
 def from_from(st):
     return json.loads(st)
 
+@app.template_filter('fn')
+def getfn(st):
+    return st.replace("https://storage.googleapis.com/examerapp.appspot.com/drops/","").split("_",1)[1]
+
 @app.template_filter('dt')
 def dt(time=False):
     """
