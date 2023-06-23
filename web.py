@@ -125,9 +125,9 @@ def dt(time=False):
         return str(day_diff // 30) + " months ago"
     return str(day_diff // 365) + " years ago"
 
-import os
-if os.environ.get('PORT'):
-    app.run(port=os.environ['PORT'],host='0.0.0.0')
-else:
-    # app.debug = True
-    app.run()
+# import os
+# if os.environ.get('PORT'):
+#     app.run(port=os.environ['PORT'],host='0.0.0.0')
+# else:
+#     # app.debug = True
+#     app.run()
