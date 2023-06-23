@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Dropper 🎈</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         .gradientBG{
@@ -45,21 +45,36 @@
             100% { background-position: 0% 50%; }
         }
 
+        .float{
+            position:fixed;
+            width:60px;
+            height:60px;
+            bottom:40px;
+            right:40px;
+            background-color:#0C9;
+            color:#FFF;
+            border-radius:50px;
+            text-align:center;
+            box-shadow: 2px 2px 3px #999;
+        }
+
     </style>
 </head>
-  <body class="gradientBG" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <center>
+  <body class="gradientBG" >
     {% if not login %} 
-    <div class="shadow-lg" style="width:18rem; margin-top: 10px;">
+    <center style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="shadow-lg">
       <div class="card-body">
         <form method="post">
           <input type="password" class="form-control" placeholder="Enter passcode" name="pw" id="ts1"></input>
         </form>
       </div>
     </div>
+    </center>
     {% else %}
-
-    <div class="card shadow-lg" style="margin-top: 10px;">
+    <center style="position: relative;">
+    <div class="card shadow-lg" style="margin: 10%;">
+      <div class="card-header"> Recent Drops 🎈</div>
         <div class="card-body">
           {% if not d%}
           No drops so far.
@@ -90,8 +105,104 @@
             </ul>
           {%endif%}
         </div>
+        <div class="card-footer text-muted">Made with ❤ by CLP.</div>
     </div>
+      
     {% endif %} 
+    {% if login %}
+    <a href="#" class="float shadow" data-bs-toggle="modal" data-bs-target="#modalId">
+      <i class="fa-solid fa-lg fa-gear" style="margin-top:30px;"></i>
+    </a>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">⚙</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <div class="card">
+              <div class="card-header">
+                <nav>
+                  <div class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-chng-pw" data-bs-toggle="tab" data-bs-target="#tab-chng-pw" type="button" role="tab" >Change password</button>
+                    <button class="nav-link" id="nav-clr-drp" data-bs-toggle="tab" data-bs-target="#tab-clr-drp" type="button" role="tab" >Clear Drops</button>
+                  </div>
+                </nav>
+              </div>
+              <div class="card-body tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" role="tabpanel" id="tab-chng-pw" tabindex="0">
+                    <div class="form-group">
+                      <label for="crt_pw">Enter Current password</label>
+                      <input type="password" class="form-control" name="crt_pw"  id="crt_pw" required placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="new_pw">Enter New password</label>
+                      <input type="password" class="form-control" name="new_pw" minlength="8" id="new_pw" required placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="new_pwc">Enter New password Again</label>
+                      <input type="password" class="form-control" name="new_pwc" minlength="8" id="new_pwc" required placeholder="">
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-clr-drp" role="tabpanel" tabindex="0">
+                  <div class="card text-bg-warning"> You are about to remove all the drops from the server.
+                   <button type="button" class="btn btn-danger">Clear all drops</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" id="btn_save" class="btn btn-primary" onclick="cl()">
+              <span id="txt_save">Save</span>
+              <span id="spnr" style="display:none;" class="spinner-grow"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+
+
     </center>
+
+    <script>
+      const cl = function(){
+        if( $("#new_pw").val() == $("#new_pwc").val()){
+          $("#txt_save").hide();
+          $("#btn_save").attr("disabled", "true");
+          $("#spnr").show();
+
+          $.ajax({
+            type: "post",
+            url: "/drop/chng_pw",
+            data: "crt_pw="+$("#crt_pw").val()+"&new_pw="+$("#new_pw").val()+"&new_pwc="+$("#new_pwc").val(),
+            success: function (response) {
+              console.log(response)
+              if(response == "True") {
+                alert("Password changed.")
+                window.location = "";
+              }else{
+                alert("Password change Failed!");
+                window.location = ""
+              }
+            }
+          });
+        }else{
+          alert("Passwords do not match!");
+        }
+      };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+
   </body>
 </html>
