@@ -149,9 +149,11 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tab-clr-drp" role="tabpanel" tabindex="0">
-                  <div class="card text-bg-warning"> You are about to remove all the drops from the server.
-                   <button type="button" class="btn btn-danger">Clear all drops</button>
+                  <div class="card text-bg-warning"> You are about to remove all the drops from the server.</div>
+                  <div class="m-3">
+                    <input type="password" class="form-control" name="clr_pw" id="clr_pw" placeholder="Enter your Password">
                   </div>
+                 <button type="button" class="btn btn-danger" onclick="clr()">Clear all drops</button>
                 </div>
               </div>
             </div>
@@ -174,6 +176,27 @@
     </center>
 
     <script>
+      const clr = function(){
+          $("#txt_save").hide();
+          $("#btn_save").attr("disabled", "true");
+          $("#spnr").show();
+
+          $.ajax({
+            type: "post",
+            url: "/drop/clr_drp",
+            data: "pw="+$("#clr_pw").val(),
+            success: function (response) {
+              console.log(response)
+              if(response == "True") {
+                alert("All drops cleared successfully.")
+                window.location = "";
+              }else{
+                alert("Password Incorrect!");
+                window.location = ""
+              }
+            }
+          });
+        };
       const cl = function(){
         if( $("#new_pw").val() == $("#new_pwc").val()){
           $("#txt_save").hide();

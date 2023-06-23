@@ -53,6 +53,13 @@ def chng_pw():
             return "True"
     return "False"
 
+@app.route("/drop/clr_drp",methods=["POST"])
+def clr_drp():
+     if request.form['pw'] == pw:
+         db.reference("dropper/drops").delete()
+         return "True"
+     return "False"
+
 @app.route("/",methods=['GET','POST'])
 def root():
     """ Root
@@ -125,9 +132,7 @@ def dt(time=False):
         return str(day_diff // 30) + " months ago"
     return str(day_diff // 365) + " years ago"
 
-# import os
-# if os.environ.get('PORT'):
-#     app.run(port=os.environ['PORT'],host='0.0.0.0')
-# else:
-#     # app.debug = True
-#     app.run()
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
