@@ -58,6 +58,21 @@
             box-shadow: 2px 2px 3px #999;
         }
 
+        .fc{
+            margin: 5;
+            overflow: auto;
+            max-width: -webkit-fill-available;
+        }
+
+        .txt {
+          overflow: hidden;
+          display: -webkit-box;
+          white-space: pre-line;
+          -webkit-line-clamp: 2; /* number of lines to show */
+                  line-clamp: 2; 
+          -webkit-box-orient: vertical;
+        }
+
     </style>
 </head>
   <body class="gradientBG" >
@@ -82,24 +97,30 @@
             <ul class="list-group">
             {% for k,v in d.items() %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div class="card" style="width:18rem;">
-                    <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted ">{{v['d']}}</h6>
-                    <p class="card-text">{{v['ip']}}</p>
+                <div class="card col-md-2" style="width:18rem;">
+                    <div class="card-body">{% set vv = v['ip'] %}
+                      <h6>{{vv[0]}}</h6>
+                      <small class="text-muted">📍 {{vv[1]}}<br>📳 {{vv[2]}}</small>
                   </div>
                 </div>
-                {% set att = (v['f'] | json) %}
+                {% set att = v['f'] %}
+                <div class="d-flex fc col-md-5 align-items-center">
                 {% if (att | length) != 0 %}
-                <div class="d-flex">
                 {% for attt in att %}
                     <div class="m-2">
-                      <a href ="{{attt}}" download=""><i class="fa fa-file fa-4x" aria-hidden="true"></i><br>{{attt | fn}}</a>
+                      <a href ="{{attt[1]}}" download=""><i class="fa fa-file fa-4x" aria-hidden="true"></i><br>{{attt[0] | fn}}</a>
                     </div>
                 {% endfor %}
-                  </div>
+                {%else%}
+                <h6 class="text-muted">No files Dropped.</h6>
                 {%endif%}
-
-                <span style="padding: 5px;" class="badge bg-primary rounded-pill text-white">{{k | dt}}</span>
+                </div>
+                <div class="card col-md-2">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted stretched-link txt" clickable="">{% if v['d'] | length == 0 %} No Caption. {%else%}{{v['d']}}{%endif%}</h6>
+                    <span style="padding: 5px;" class="badge bg-primary rounded-pill text-white">{{k | dt}}</span>
+                </div>
+              </div>
               </li>
             {%endfor%}
             </ul>
@@ -116,7 +137,7 @@
     
     <!-- Modal -->
     <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">⚙</h5>
@@ -170,12 +191,45 @@
       </div>
     </div>
 
+    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">Caption</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="white-space: pre-line;" id="viewTxt">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="viewCopy" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% endif %}
 
 
     </center>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script>
+
+      $(".txt").click((e) => {
+        $("#viewTxt").text($(e.target).text());
+        $("#viewCopy").removeAttr("disabled");
+        $("#viewCopy").text("Copy");
+        $("#viewCopy").click(() =>{
+          navigator.clipboard.writeText($("#viewTxt").text());
+          $("#viewCopy").attr("disabled","true");
+          $("#viewCopy").text("Copied!");
+        });
+
+        $("#viewModal").modal("show");
+      });
       const clr = function(){
           $("#txt_save").hide();
           $("#btn_save").attr("disabled", "true");
@@ -223,9 +277,5 @@
         }
       };
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-
   </body>
 </html>

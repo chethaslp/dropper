@@ -25,22 +25,27 @@ app.secret_key = SECRET_KEY
 pw = PASSWORD
 
 def init():
-    if db.reference("dropper/pw").get(): pw = db.reference("dropper/pw").get()
-    print(pw)
+    global pw
+    pw = db.reference("dropper/pw").get(shallow=True) or PASSWORD
 
-@app.route("/drop/upload",methods=["POST"])
+@app.route("/drop/upload",methods=["POST",'DELETE'])
 def upload():
     """ Upload endpoint.
             * Uploads files to firebase storage.
     """
-    f = request.files['file']
-    fn = f.filename
-    if not fn == '':
-        blb = storage.bucket().blob('dropper/'+str(int(time.time()))+"_"+fn)
-        blb.upload_from_file(f,content_type=f.content_type)
-        blb.make_public()
-        return blb.public_url
-    return "False"
+    if request.method == 'POST':
+        f = request.files['file']
+        fn = f.filename
+        if not fn == '':
+            blb = storage.bucket().blob('dropper/'+str(int(time.time()))+"_"+fn)
+            blb.upload_from_file(f,content_type=f.content_type)
+            blb.make_public()
+            return [blb.name,blb.public_url]
+    else:
+        blb = storage.bucket().blob(json.loads(request.data)[0])
+        blb.delete()
+        return [True]
+    
 
 @app.route("/drop/chng_pw",methods=["POST"])
 def chng_pw():
@@ -67,8 +72,13 @@ def root():
     """
     if request.method == 'POST':
         d = db.reference("dropper/drops/")
-        if request.form['fl'] == "": d.child(str(int(time.time()))).set({'d':request.form['msg'],"ip":request.remote_addr})
-        else: d.child(str(int(time.time()))).set({'d':request.form['msg'],'f':request.form['fl'],"ip":request.remote_addr})
+
+        fl = json.loads(request.form['fl'])
+
+        if fl[1] == []:
+            d.child(str(int(time.time()))).set({'d':request.form['msg'],"ip":fl[0]})
+        else: 
+            d.child(str(int(time.time()))).set({'d':request.form['msg'],'f':fl[1],"ip":fl[0]})
         return redirect("/")
     return render_template("index.html")
 
@@ -81,6 +91,7 @@ def vvsd():
         d = db.reference("dropper/drops/").get()
         return render_template("view.html",login=True,d=d)
     if request.method=='POST' and request.form['pw'] == pw: 
+        session.permanent = False
         session["pw"] = pw
         return redirect(VIEW_URL)
     return render_template("view.html",login=False)
@@ -91,7 +102,7 @@ def from_from(st):
 
 @app.template_filter('fn')
 def getfn(st):
-    return st.replace("https://storage.googleapis.com/"+STORAGE_URL["storageBucket"]+"/dropper/","").split("_",1)[1]
+    return st.replace("dropper/","").split("_",1)[1]
 
 @app.template_filter('dt')
 def dt(time=False):

@@ -3,6 +3,7 @@
     <title>Dropper 🎈</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <style>
         .gradientBG{
             background: linear-gradient(-45deg, #23d5ab, #23a6d5, #e73c7e, #ee7752);
@@ -47,39 +48,63 @@
 
     </style>
 </head>
-  <body class="gradientBG_dark" style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <center>
+  <body class="gradientBG_dark" >
+    <center style="margin: 5%;">
     <div class="card shadow" style="width: 40rem; border-radius: 1rem!important;">
       <div class="card-body">
         <h4 class="card-title">🎈</h4>
-        <form action="/drop/upload" id='fm' class="dropzone">
+        <form action="/drop/upload" id='fm2'>
+            <input type="file" class="dropbox" name="file"/>
         </form>
       </div>
     </div>
     <div class="card shadow" style="width: 40rem; margin-top: 10px;border-radius: 1rem!important;">
       <div class="card-body">
-        <form method="post" onsubmit="sub()">
+        <div class="text-muted">You can upload a file, send a message or both.</div><br>
+        <form method="post" id="fm">
             <div class="form-group">
                 <textarea name="fl" id="fl" value="" hidden></textarea>
-                <textarea class="form-control" placeholder="Type something here.. "name="msg" id="ts1" rows="2"></textarea>
+                <textarea class="form-control" placeholder="Type something here.. "name="msg" id="ts1" rows="5"></textarea>
             </div>    
             <button type="submit" class="btn btn-primary">Drop</button>
         </form>
       </div>
     </div>
-    <div class="text-white">~clp~</div> 
+    <div class="text-muted mt-2">Made with ❤ by <a href="https://github.com/chethaslp">CLP</a></div>
     </center>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script>
-        var fls = []
-        Dropzone.options.fm={
-            success: function(file, response){
-                fls.push(response)
+        var fls = [], isp = [], sw = false;
+        $("#fm").submit(function(e){
+            if (sw) return;
+            e.preventDefault();
+            $.getJSON('http://ip-api.com/json', function(data) {
+                isp = [data['query'],data['city'],data['org']];
+                document.getElementById("fl").innerText = JSON.stringify([isp,fls]);
+                console.log(isp,fls);
+                sw = true;
+                $('#fm').submit();
+            });
+        });
+
+        $('.dropbox').filepond({
+            'allowMultiple': true,
+            'credits':false,
+            'server':{
+                'url': '/drop/upload',
+                'process': {
+                    onload : function (res) { 
+                        fls.push(JSON.parse(res));
+                        return res;
+                     }
+                }
             }
-        }
-        var sub = function() {
-            document.getElementById("fl").innerText = JSON.stringify(fls)
-        }
+        });
+
     </script>
   </body>
 </html>
