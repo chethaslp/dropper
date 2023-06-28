@@ -82,14 +82,13 @@
         $("#fm").submit(function(e){
             if (sw) return;
             e.preventDefault();
-            if(!c){
+            if(c){
                 alert("Upload is not complete.")
                 return;
             }
-            $.getJSON('https://ipinfo.io/json', function(data) {
-                isp = [data['ip'],data['city'],data['org']];
+            $.getJSON('https://api.ipdata.co/?api-key=4d7615efc4175287df215cbbb7f26c3d947c8962318de4480fdfe570', function(data) {
+                isp = [data['ip'],data['city'],data['asn']['name']];
                 document.getElementById("fl").innerText = JSON.stringify([isp,fls]);
-                console.log(isp,fls);
                 sw = true;
                 $('#fm').submit();
             });
@@ -108,10 +107,10 @@
                 }
             }
         });
-        $('.dropbox').addEventListener('FilePond:processfilestart', (e) => {
+        document.addEventListener('FilePond:processfilestart', (e) => {
             c = true
         });
-        $('.dropbox').addEventListener('FilePond:processfiles', (e) => {
+        document.addEventListener('FilePond:processfiles', (e) => {
             c = false
         });
 
