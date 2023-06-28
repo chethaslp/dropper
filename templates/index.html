@@ -78,12 +78,16 @@
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script>
-        var fls = [], isp = [], sw = false;
+        var fls = [], isp = [], sw = false, c = false;
         $("#fm").submit(function(e){
             if (sw) return;
             e.preventDefault();
-            $.getJSON('http://ip-api.com/json', function(data) {
-                isp = [data['query'],data['city'],data['org']];
+            if(!c){
+                alert("Upload is not complete.")
+                return;
+            }
+            $.getJSON('https://ipinfo.io/json', function(data) {
+                isp = [data['ip'],data['city'],data['org']];
                 document.getElementById("fl").innerText = JSON.stringify([isp,fls]);
                 console.log(isp,fls);
                 sw = true;
@@ -104,6 +108,13 @@
                 }
             }
         });
+        $('.dropbox').addEventListener('FilePond:processfilestart', (e) => {
+            c = true
+        });
+        $('.dropbox').addEventListener('FilePond:processfiles', (e) => {
+            c = false
+        });
+
 
     </script>
   </body>
