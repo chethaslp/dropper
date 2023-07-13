@@ -86,7 +86,7 @@
                 alert("Upload is not complete.")
                 return;
             }
-            $.getJSON('https://api.ipdata.co/?api-key=4d7615efc4175287df215cbbb7f26c3d947c8962318de4480fdfe570', function(data) {
+            $.getJSON('https://api.ipdata.co/?api-key={{ip_api}}', function(data) {
                 isp = [data['ip'],data['city'],data['asn']['name']];
                 document.getElementById("fl").innerText = JSON.stringify([isp,fls]);
                 sw = true;

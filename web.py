@@ -9,7 +9,7 @@ from config import *
 DROPPER
  ~CLP - 2023
 
- Dropper is a flask app that allows users to upload files and share messages with themselves.
+ Dropper is a flask app that allows users to upload files and share messages within one's private environment.
  Dropper is intented for personal use.
 
  Prereqs:
@@ -80,7 +80,7 @@ def root():
         else: 
             d.child(str(int(time.time()))).set({'d':request.form['msg'],'f':fl[1],"ip":fl[0]})
         return redirect("/")
-    return render_template("index.html")
+    return render_template("index.html",ip_api=IP_API)
 
 @app.route(VIEW_URL,methods=['POST','GET'])
 def vvsd():
