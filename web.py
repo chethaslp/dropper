@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect ,url_for, session
+from flask import Flask, render_template, request, redirect, session, send_file
 import firebase_admin
 from firebase_admin import credentials, storage, db
 import time
@@ -95,6 +95,10 @@ def vvsd():
         session["pw"] = pw
         return redirect(VIEW_URL)
     return render_template("view.html",login=False)
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_file("templates/favicon.ico")
 
 @app.template_filter('json')
 def from_from(st):
