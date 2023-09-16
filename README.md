@@ -61,17 +61,21 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
 #### Access Demo site at 
 
 ### Dependencies
+```
+Python:
     flask
     firebase_admin
     gunicorn
     python-dotenv
-
-
+```
+```
+Javascript:
     Dropzone
     FilePond
     jQuery
     Bootstrap
     Fontawesome
+```
 <hr>
 
 ```
