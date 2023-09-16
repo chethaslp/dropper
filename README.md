@@ -1,0 +1,93 @@
+
+![Logo](https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/title.png)
+                    
+                                                     Your personal dropbox.
+
+### Usage
+
+Remember when you are uncomfortable to login into a guest PC just to share some files from it. You would either had to login into whatsapp/telegram apps to share even just a link (now solved with QR codes). Thats where dropper comes in, its online and personal. So you and your close circle probably have access to it. You can use it to share any text or files through it to yourself. **Please duly note that this app is developed for personal use for a user and the security concerns are ignored for simplicity.**
+### Implementation
+
+* Home: [/], default
+<p align="center" width="100%">
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/1.png" alt="drawing" width="500"/> 
+</p>
+
+* Home: [/], while Uploading a file
+<p align="center" width="100%">
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/2.png" alt="drawing" width="500"/> 
+</p>
+
+* Viewpanel: [/view/admin], viewing all drops made so far
+<p align="center" width="100%">
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/3.png" alt="drawing" width="500"/> 
+</p>
+
+* Home: [/view/admin], when settings dialog is open
+<p align="center" width="100%">
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/4.png" alt="drawing" width="500"/> 
+</p>
+
+### Prerequisites
+* Configure your [firebase account](https://console.firebase.google.com/) and create a project. 
+* Get your 'credentials.json' from firebase.
+        Most PaaS supports environment variables and secret files to be added. You can either add these variables in your environmental variables (prefered).
+
+* Set the following environment variables. Or, if you are using it locally, add it directly in 'config.py' file:
+    
+        PASSWORD : your password 
+        CRED_FILE : your firebase cred file URL. Do not set if its in the root folder. Upload it as a 'secret file' in your Server/PaaS.
+        STRG_BKT : your firebase storage bucket URL
+        STRG_DB : your firebase database URL
+
+        VIEW URL: your login url (change it accordingly)
+        SECRET_KEY: used for session storage (any random strong password could be added) [trivial]
+
+    Go to [ipdata.co](https://ipdata.co) and create an account
+        
+        IP_API : enter the api key from ipdata.co here
+          (This is required for capturing user IP and IP Location)
+
+###
+
+### Deployment
+
+* To run locally for development, directly run web.py (Debug mode enabled).
+
+* For production, use gunicorn:
+
+        web: gunicorn --bind :8000 --workers 3 --threads 2 web:app
+
+#### Access Demo site at 
+
+### Dependencies
+    flask
+    firebase_admin
+    gunicorn
+    python-dotenv
+
+<hr>
+
+```
+MIT License
+
+Copyright (c) 2023 Chethas L Pramod
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
