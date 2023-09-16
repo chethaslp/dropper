@@ -37,7 +37,7 @@ def upload():
         f = request.files['file']
         fn = f.filename
         if not fn == '':
-            blb = storage.bucket().blob('dropper/'+str(int(time.time()))+"_"+fn)
+            blb = storage.bucket().blob('dropper/'+('temp/'if DEMO else '')+str(int(time.time()))+"_"+fn)
             blb.upload_from_file(f,content_type=f.content_type)
             blb.make_public()
             return [blb.name,blb.public_url]
@@ -51,7 +51,7 @@ def upload():
 def chng_pw():
     """ Change Password endpoint.
     """
-    if request.form['crt_pw'] == pw:
+    if not DEMO and request.form['crt_pw'] == pw:
         if request.form['new_pw'] == request.form['new_pwc']:
             db.reference("dropper/pw").set(request.form['new_pw'])
             init()
@@ -60,7 +60,7 @@ def chng_pw():
 
 @app.route("/drop/clr_drp",methods=["POST"])
 def clr_drp():
-     if request.form['pw'] == pw:
+     if not DEMO and request.form['pw'] == pw:
          db.reference("dropper/drops").delete()
          return "True"
      return "False"
@@ -71,7 +71,7 @@ def root():
             * Renders the home page.
     """
     if request.method == 'POST':
-        d = db.reference("dropper/drops/")
+        d = db.reference("dropper/temp/" if DEMO else "dropper/drops/")
 
         fl = json.loads(request.form['fl'])
 
@@ -80,7 +80,11 @@ def root():
         else: 
             d.child(str(int(time.time()))).set({'d':request.form['msg'],'f':fl[1],"ip":fl[0]})
         return redirect("/")
-    return render_template("index.html",ip_api=IP_API)
+    return render_template("index.html",ip_api=IP_API,demo=DEMO)
+
+@app.route("/main.css")
+def css():
+    return send_file("static/main.css")
 
 @app.route(VIEW_URL,methods=['POST','GET'])
 def vvsd():
@@ -88,7 +92,7 @@ def vvsd():
             * Allows user to access the shared datas."""
     init()
     if session.get("pw") and session.get("pw") == pw:
-        d = db.reference("dropper/drops/").get()
+        d = db.reference("dropper/temp/" if DEMO else "dropper/drops/").get()
         return render_template("view.html",login=True,d=d)
     if request.method=='POST' and request.form['pw'] == pw: 
         session.permanent = False

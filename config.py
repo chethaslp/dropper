@@ -31,6 +31,7 @@ load_dotenv()
 def excep():
   raise Exception("Please set all required variables.")
 
+DEMO = True
 CRED_FILE = os.environ.get("CRED_FILE") or "cred.json"
 
 STORAGE_URL = {'storageBucket': os.environ.get("STRG_BKT") or excep(),

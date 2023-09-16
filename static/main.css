@@ -1,0 +1,43 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(-45deg, #005642, #00465f, #6f002a, #611700);
+    background-size: 400% 400%;
+    animation: gradientBG_dark 15s ease infinite;
+}
+
+center{
+    margin: 5%;
+    width: 100vw;
+}
+
+@keyframes gradientBG_dark {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.shake{
+    animation: shake 300ms;
+    animation-iteration-count: 2;
+}
+
+@keyframes shake{
+    25%{transform:translateX(4px)}
+    50%{transform:translateX(-4px)}
+    75%{transform:translateX(4px)}
+}
+
+.nkj{
+    border-radius: 1rem!important;
+    max-width: 100%;
+}
+
+@media screen and (min-width: 480px) {
+    .nkj{
+        max-width: 70%;
+        border-radius: 1rem!important;
+    }
+  }
