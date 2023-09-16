@@ -66,6 +66,12 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
     gunicorn
     python-dotenv
 
+
+    Dropzone
+    FilePond
+    jQuery
+    Bootstrap
+    Fontawesome
 <hr>
 
 ```
