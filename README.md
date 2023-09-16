@@ -31,9 +31,9 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
 ### Prerequisites
 * Configure your [firebase account](https://console.firebase.google.com/) and create a project. 
 * Get your 'credentials.json' from firebase.
-        Most PaaS supports environment variables and secret files to be added. You can either add these variables in your environmental variables (prefered).
+        Most PaaS supports environment variables and secret files to be added.
 
-* Set the following environment variables. Or, if you are using it locally, add it directly in 'config.py' file:
+* Set the following environment variables (prefered). Or, if you are using it locally, add it directly in 'config.py' file:
     
         PASSWORD : your password 
         CRED_FILE : your firebase cred file URL. Do not set if its in the root folder. Upload it as a 'secret file' in your Server/PaaS.
