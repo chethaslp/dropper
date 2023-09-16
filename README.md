@@ -1,7 +1,7 @@
-
-![Logo](https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/title.png)
-                    
-                                                     Your personal dropbox.
+<p align="center" width="100%">
+  <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/title.png" alt="title" width="100%"/> <br>
+  Your personal dropbox.
+</p>
 
 ### Usage
 
@@ -10,22 +10,22 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
 
 * Home: [/], default
 <p align="center" width="100%">
-    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/1.png" alt="drawing" width="500"/> 
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/1.png" alt="Screenshot" width="500"/> 
 </p>
 
 * Home: [/], while Uploading a file
 <p align="center" width="100%">
-    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/2.png" alt="drawing" width="500"/> 
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/2.png" alt="Screenshot" width="500"/> 
 </p>
 
 * Viewpanel: [/view/admin], viewing all drops made so far
 <p align="center" width="100%">
-    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/3.png" alt="drawing" width="500"/> 
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/3.png" alt="Screenshot" width="500"/> 
 </p>
 
 * Home: [/view/admin], when settings dialog is open
 <p align="center" width="100%">
-    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/4.png" alt="drawing" width="500"/> 
+    <img src="https://raw.githubusercontent.com/chethaslp/dropper/master/screenshots/4.png" alt="Screenshot" width="500"/> 
 </p>
 
 ### Prerequisites
