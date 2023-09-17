@@ -26,6 +26,7 @@ CONFIG FILE
 
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -33,7 +34,8 @@ def excep():
   raise Exception("Please set all required variables.")
 
 DEMO = bool(os.environ.get("DEMO")) or False
-CRED_FILE = os.environ.get("CRED_FILE") or "cred.json"
+if os.environ.get("CRED"): CRED_FILE = json.loads(os.environ.get("CRED"))
+else: CRED_FILE = os.environ.get("CRED_FILE") or excep()
 
 STORAGE_URL = {'storageBucket': os.environ.get("STRG_BKT") or excep(),
                 'databaseURL': os.environ.get("STRG_DB") or excep()}
