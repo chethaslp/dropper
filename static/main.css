@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 body{
     display: flex;
     justify-content: center;
@@ -6,6 +7,9 @@ body{
     background: linear-gradient(-45deg, #005642, #00465f, #6f002a, #611700);
     background-size: 400% 400%;
     animation: gradientBG_dark 15s ease infinite;
+
+    font-size: 90%;
+    font-family: 'Montserrat';
 }
 
 center{
@@ -41,3 +45,7 @@ center{
         border-radius: 1rem!important;
     }
   }
+
+h6{
+    font-size: 100%;
+}

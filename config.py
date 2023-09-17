@@ -9,6 +9,7 @@ CONFIG FILE
 * You should have a cred.json file downloaded from firebase console.
 
 * Set the following environment variables:
+    DEMO: [bool] use app in demo mode 
     PASSWORD : your password
     
     CRED_FILE : your firebase cred file URL. Do not set if its in the root folder. Upload it as a 'secret file' in your Server/PaaS.
@@ -31,7 +32,7 @@ load_dotenv()
 def excep():
   raise Exception("Please set all required variables.")
 
-DEMO = True
+DEMO = bool(os.environ.get("DEMO")) or False
 CRED_FILE = os.environ.get("CRED_FILE") or "cred.json"
 
 STORAGE_URL = {'storageBucket': os.environ.get("STRG_BKT") or excep(),

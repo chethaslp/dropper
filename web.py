@@ -26,7 +26,7 @@ pw = PASSWORD
 
 def init():
     global pw
-    pw = db.reference("dropper/pw").get(shallow=True) or PASSWORD
+    pw = "demo" if DEMO else (db.reference("dropper/pw").get(shallow=True) or PASSWORD)
 
 @app.route("/drop/upload",methods=["POST",'DELETE'])
 def upload():
@@ -93,7 +93,7 @@ def vvsd():
     init()
     if session.get("pw") and session.get("pw") == pw:
         d = db.reference("dropper/temp/" if DEMO else "dropper/drops/").get()
-        return render_template("view.html",login=True,d=d)
+        return render_template("view.html",login=True,d=d,demo=DEMO)
     if request.method=='POST' and request.form['pw'] == pw: 
         session.permanent = False
         session["pw"] = pw
@@ -103,6 +103,18 @@ def vvsd():
 @app.route("/favicon.ico")
 def favicon():
     return send_file("templates/favicon.ico")
+
+@app.route("/app/deleteTemp")
+def deleteTemp(lastIndex=5):
+    d = db.reference("dropper/temp/").get()
+    if len(d) > lastIndex: 
+        for x in sorted(d,reverse=True)[lastIndex:]:
+            for y in d[x]['f']:
+                blb = storage.bucket().blob(y[0])
+                blb.delete()
+            db.reference("dropper/temp").child(x).delete()
+        return sorted(d,reverse=True)[lastIndex:]
+    return "No Deletion"
 
 @app.template_filter('json')
 def from_from(st):

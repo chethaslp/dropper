@@ -47,6 +47,10 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
         
         IP_API : enter the api key from ipdata.co here
           (This is required for capturing user IP and IP Location)
+    
+    Demo mode: Do not set this variable while in production. This is specifically set for the demo page in github.
+        
+        DEMO : True/False [default:False]
 
 ###
 
