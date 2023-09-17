@@ -45,8 +45,12 @@ Remember when you are uncomfortable to login into a guest PC just to share some 
 
 * Set the following environment variables (prefered). Or, if you are using it locally, add it directly in 'config.py' file:
     
-        PASSWORD : your password 
-        CRED_FILE : your firebase cred file URL. Do not set if its in the root folder. Upload it as a 'secret file' in your Server/PaaS.
+        PASSWORD : your password
+  
+        CRED : set the contents of 'credentials.json' to this variable.
+                        OR
+        CRED_FILE : set the path for 'credentials.json'. You could upload it as a 'secret file' in your PaaS.
+  
         STRG_BKT : your firebase storage bucket URL
         STRG_DB : your firebase database URL
 
