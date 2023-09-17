@@ -2,3 +2,4 @@ __pycache__/
 cred.json
 test.py
 .env
+.vercel
