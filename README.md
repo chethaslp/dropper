@@ -8,9 +8,8 @@
 Remember when you are uncomfortable to login into a guest PC just to share some files from it. You would either had to login into whatsapp/telegram apps to share even just a link (now solved with QR codes). Thats where dropper comes in, its online and personal. So you and your close circle probably have access to it. You can use it to share any text or files through it to yourself. **Please duly note that this app is developed for personal use for a user and the security concerns are ignored for simplicity.**
 
 ### DEMO site
- Access Demo site at <a href="https://dropper-eight.vercel.app" target="_blank">dropper-eight.vercel.app</a>
-
- Admin URL: <a href="https://dropper-eight.vercel.app/view/admin" target="_blank">dropper-eight.vercel.app/view/admin</a> <br>
+ Access Demo site at <a href="https://dropper-de4ro476z-chethaslp.vercel.app" target="_blank">dropper-de4ro476z-chethaslp.vercel.app (Preview)</a><br>
+ Admin URL: <a href="https://dropper-de4ro476z-chethaslp.vercel.app/view/admin" target="_blank">dropper-de4ro476z-chethaslp.vercel.app/view/admin</a> <br>
  Admin password: demo
 
 **Be sure that you are not uploading any sensitive contents.**
